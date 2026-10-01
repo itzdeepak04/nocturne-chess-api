@@ -1,0 +1,3 @@
+import { Prop,Schema,SchemaFactory } from '@nestjs/mongoose';import { HydratedDocument,Types } from 'mongoose';
+@Schema({timestamps:true,versionKey:false})export class FriendRequest{_id!:Types.ObjectId;@Prop({type:Types.ObjectId,ref:'User',required:true,index:true})sender!:Types.ObjectId;@Prop({type:Types.ObjectId,ref:'User',required:true,index:true})recipient!:Types.ObjectId;@Prop({enum:['pending','accepted','declined'],default:'pending'})status!:string;}
+export type FriendRequestDocument=HydratedDocument<FriendRequest>;export const FriendRequestSchema=SchemaFactory.createForClass(FriendRequest);FriendRequestSchema.index({sender:1,recipient:1,status:1});

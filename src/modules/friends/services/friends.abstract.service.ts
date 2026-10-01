@@ -1,0 +1,1 @@
+export abstract class FriendsAbstractService{abstract send(userId:string,publicId:string):Promise<object>;abstract accept(userId:string,requestId:string):Promise<object>;abstract pending(userId:string):Promise<object[]>;abstract list(userId:string):Promise<object[]>;}

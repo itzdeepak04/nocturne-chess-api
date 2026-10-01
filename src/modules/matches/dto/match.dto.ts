@@ -1,0 +1,1 @@
+import { IsIn,IsOptional,IsString,Matches } from 'class-validator';export class JoinMatchDto{@IsString()@Matches(/^[A-Z0-9]{6}$/)code!:string;}export class MakeMoveDto{@Matches(/^[a-h][1-8]$/)from!:string;@Matches(/^[a-h][1-8]$/)to!:string;@IsOptional()@IsIn(['q','r','b','n'])promotion?:string;}

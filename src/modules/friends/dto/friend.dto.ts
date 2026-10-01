@@ -1,0 +1,1 @@
+import { IsString,Matches } from 'class-validator';export class SendFriendRequestDto{@IsString()@Matches(/^NC-[A-F0-9]{6}$/)publicId!:string;}export class FriendRequestIdDto{@IsString()requestId!:string;}

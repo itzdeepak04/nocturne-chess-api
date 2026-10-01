@@ -1,0 +1,1 @@
+import { MakeMoveDto } from '../dto/match.dto';export abstract class MatchesAbstractService{abstract create(userId:string):Promise<object>;abstract join(userId:string,code:string):Promise<object>;abstract get(userId:string,id:string):Promise<object>;abstract move(userId:string,id:string,dto:MakeMoveDto):Promise<object>;}
