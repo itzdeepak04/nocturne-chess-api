@@ -2,6 +2,9 @@
   "name": "nocturne-chess-api",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "build": "nest build",
     "start": "nest start",
