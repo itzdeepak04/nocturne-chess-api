@@ -18,7 +18,26 @@ The most recent 100 messages are displayed and expire after 24 hours. Voice sign
 
 STUN-only voice can fail on restrictive mobile networks. This update does not make a paid service mandatory, but reliable connectivity across those networks requires a TURN relay. You can supply a self-hosted Coturn-compatible server with TURN_URLS and TURN_SECRET (see .env.voice.example). The API issues short-lived credentials; the shared secret stays on the server. Hosting and relay bandwidth may incur costs.
 
-## Tests
+## Metered / managed TURN configuration
+
+Copy the dashboard's comma-separated `turn:` and `turns:` URLs into `TURN_URLS`,
+its `username` into `TURN_USERNAME`, and its `credential` into `TURN_PASSWORD`.
+Keep all supplied transports, including TLS. Leave `TURN_SECRET` unset for this mode.
+A complete username/password pair takes precedence over Coturn authentication.
+Without a complete pair or a Coturn secret, the API returns STUN only.
+
+Set these variables in `chess-api/.env` for local development and separately in
+the deployed API's environment, then restart/redeploy the API. No frontend
+environment changes are needed: the existing authenticated configuration request
+already passes the returned ICE servers to WebRTC. Reload both players and retry voice.
+`relayAvailable: true` means credentials were configured, not that the relay was tested.
+
+Do not commit credentials. Rotate any credentials exposed in screenshots or chat.
+The authenticated participant's browser necessarily receives the TURN username/password
+to connect to the relay; use provider quotas and rotate credentials as appropriate.
+Never use the provider's account API secret as a TURN password.
+
+## Verification
 
 API: npm run build, then node --test tests/communication.test.cjs
 

@@ -35,7 +35,13 @@ export class CommunicationService implements CommunicationAbstractService {
   const iceServers:object[]=[{urls:['stun:stun.l.google.com:19302']}];
   const urls=this.settings.get<string>('TURN_URLS')?.split(',').map(v=>v.trim()).filter(Boolean);
   const secret=this.settings.get<string>('TURN_SECRET');
-  if(urls?.length&&secret){
+  const turnUsername=this.settings.get<string>('TURN_USERNAME');
+  const turnPassword=this.settings.get<string>('TURN_PASSWORD');
+  // Managed providers supply a username/password, not a Coturn shared secret.
+  // Prefer a complete managed credential pair when both modes are configured.
+  if(urls?.length&&turnUsername&&turnPassword){
+   iceServers.push({urls,username:turnUsername,credential:turnPassword});
+  }else if(urls?.length&&secret){
    const username=`${Math.floor(Date.now()/1000)+3600}:${userId}`;
    iceServers.push({urls,username,credential:createHmac('sha1',secret).update(username).digest('base64')});
   }
